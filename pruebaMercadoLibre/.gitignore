@@ -1,0 +1,52 @@
+# Dependencias
+node_modules/
+
+# Builds / bundles
+dist/
+build/
+out/
+storybook-static/
+server-dist/
+dist-server/
+
+# Caches / artefactos
+.vite/
+.eslintcache
+.cache/
+.tmp/
+tmp/
+*.tsbuildinfo
+
+# Tests
+coverage/
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Entornos (no subir credenciales)
+.env
+.env.*
+!.env.example
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+
+# SO (Windows / macOS)
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# Varias
+*.local

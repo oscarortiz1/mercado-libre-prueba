@@ -1,0 +1,53 @@
+:root {
+  --topstripe-height: 44px;
+  --topstripe-color-start: #ffd400;
+  --topstripe-color-end: #ffb800;
+
+  --topstripe-icon-size: 200px;
+
+  --topstripe-icon-offset-x: 8px;
+}
+
+.top-stripe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--topstripe-height) + env(safe-area-inset-top, 0px));
+  background: linear-gradient(
+    90deg,
+    var(--topstripe-color-start),
+    var(--topstripe-color-end)
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.top-stripe-spacer {
+  height: calc(var(--topstripe-height) + env(safe-area-inset-top, 0px));
+}
+
+.top-stripe-icon {
+  position: fixed;
+  z-index: 10000;
+  top: calc(env(safe-area-inset-top, 0px) + var(--topstripe-icon-offset-y));
+  left: calc(env(safe-area-inset-left, 0px) + var(--topstripe-icon-offset-x));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 10px;
+
+  pointer-events: auto;
+
+  outline: none;
+}
+.top-stripe-icon:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25);
+}
+
+.top-stripe-icon-img {
+  width: var(--topstripe-icon-size);
+  object-fit: contain;
+  display: block;
+}

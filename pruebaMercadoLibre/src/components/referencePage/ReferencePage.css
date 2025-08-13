@@ -1,0 +1,194 @@
+.min-h-screen {
+  min-height: vh;
+}
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+
+.w-full {
+  width: 100%;
+}
+.max-w-md {
+  max-width: 35rem;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .md\:p-6 {
+    padding: 1.5rem;
+  }
+}
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.text-xl {
+  font-size: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  font-family: "Architects Daughter", cursive;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  padding-left: 10px;
+}
+
+@media (max-width: 440px) {
+  .text-xl {
+    font-size: 1.5rem;
+    line-height: 1.2rem;
+  }
+}
+.font-semibold {
+  font-weight: 600;
+}
+.text-gray-600 {
+  color: #4b5563;
+}
+.text-gray-700 {
+  color: #374151;
+}
+.text-white {
+  color: #ffffff;
+}
+.text-red-600 {
+  color: #dc2626;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-11 {
+  height: 2.75rem;
+}
+
+.border {
+  border: 2px solid #d1d5db;
+}
+.border-gray-300 {
+  border-color: #d1d5db;
+}
+
+input {
+  padding-left: 15px;
+}
+
+input::placeholder {
+  color: #888;
+  font-size: 14px;
+}
+.border-red-500 {
+  border-color: #ef4444;
+}
+.outline-none {
+  outline: none;
+}
+.focus\:outline-none:focus {
+  outline: none;
+}
+
+.focus\:ring-2:focus {
+  box-shadow: 0 0 0 2px #374151;
+}
+.focus\:ring-indigo-500:focus {
+  box-shadow: 0 0 0 2px #374151;
+}
+
+.bg-indigo-600 {
+  background-color: #4f46e5;
+}
+.hover\:bg-indigo-700:hover {
+  background-color: #4338ca;
+}
+.font-medium {
+  font-weight: 500;
+}
+.disabled\:opacity-60:disabled {
+  opacity: 0.6;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.block {
+  display: block;
+}
+
+select {
+  width: 100%;
+  height: 2.5rem;
+  padding-left: 15px;
+  box-sizing: border-box;
+  border: 2px solid #d1d5db;
+  border-radius: 0.75rem;
+  background-color: #fff;
+  color: #374151;
+  font-size: 14px;
+}
+input,
+select,
+button,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+select:invalid {
+  color: #888;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+.border-blue-600 {
+  border-color: #2563eb;
+}
+
+.btn-row button {
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.btn-row button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #374151;
+}
+.btn-row button:first-child:hover {
+  background: rgba(239, 68, 68, 0.06);
+}
+.btn-row button:last-child:hover {
+  background: rgba(37, 99, 235, 0.06);
+}
