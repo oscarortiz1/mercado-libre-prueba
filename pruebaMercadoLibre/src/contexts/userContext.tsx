@@ -46,6 +46,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
           email: data.email,
           country_id: data.country_id,
           address: { address: data.address?.address ?? "" },
+          phone: { number: data.phone?.number ?? "" },
         };
 
         cachedUser = filtered;

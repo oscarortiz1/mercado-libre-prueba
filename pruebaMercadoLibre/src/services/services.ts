@@ -4,3 +4,10 @@ export async function fetchUser() {
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${text.slice(0,200)}`);
   return JSON.parse(text);
 }
+
+export async function getCountry() {
+  const res = await fetch("/meli/classified_locations/countries");
+  const text = await res.text();
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${text.slice(0,200)}`);
+  return JSON.parse(text);
+}

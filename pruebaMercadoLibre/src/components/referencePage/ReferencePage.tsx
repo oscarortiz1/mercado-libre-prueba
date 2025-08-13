@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ReferencePage.css";
+import { useUser } from "../../contexts/userContext";
+import CountrySelect from "../selectCountries/CountrySelect";
+import { useT } from "../../i18n/useT";
 
 export default function ReferencePage() {
+   const { t } = useT();
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
@@ -11,6 +15,19 @@ export default function ReferencePage() {
     direccion: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (!user) return;
+    setForm((prev) => ({
+      ...prev,
+      nombre: user.first_name || prev.nombre,
+      apellido: user.last_name || prev.apellido,
+      correo: user.email || prev.correo,
+      telefono: user.phone?.number || prev.telefono,
+      direccion: user.address?.address || prev.direccion,
+    }));
+  }, [user]);
 
   function onChange(e: { target: { name: string; value: string } }) {
     const { name, value } = e.target;
@@ -19,6 +36,7 @@ export default function ReferencePage() {
 
   function validate() {
     const e: Record<string, string> = {};
+
     if (!form.nombre.trim()) e.nombre = "Requerido";
     if (!form.apellido.trim()) e.apellido = "Requerido";
 
@@ -31,6 +49,7 @@ export default function ReferencePage() {
     if (!form.telefono.trim()) e.telefono = "Requerido";
     if (!form.pais.trim()) e.pais = "Requerido";
     if (!form.direccion.trim()) e.direccion = "Requerido";
+
     return e;
   }
 
@@ -40,6 +59,7 @@ export default function ReferencePage() {
     setErrors(e);
     if (Object.keys(e).length === 0) {
       alert("Formulario válido ✔");
+      console.log(form);
     }
   }
 
@@ -51,137 +71,67 @@ export default function ReferencePage() {
         noValidate
       >
         <header>
-          <h1 className="text-xl font-semibold">Ya Casi estamos listos</h1>
-          <h1 className="text-xl font-semibold">Actualiza tus datos</h1>
+          <h1 className="text-xl font-semibold">{t("title.almost")}</h1>
+          <h1 className="text-xl font-semibold">{t("title.update")}</h1>
         </header>
-        <div>
-          <input
-            id="nombre"
-            name="nombre"
-            placeholder="Nombre"
-            value={form.nombre}
-            onChange={onChange}
-            required
-            className={`w-full h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-indigo-500 ${
-              errors.nombre ? "border-red-500" : "border-gray-300"
-            }`}
-            autoComplete="given-name"
-          />
-          {errors.nombre && (
-            <p className="text-xs text-red-600 mt-1">{errors.nombre}</p>
-          )}
-        </div>
 
-        <div>
-          <input
-            id="apellido"
-            name="apellido"
-            placeholder="Apellido"
-            value={form.apellido}
-            onChange={onChange}
-            required
-            className={`w-full h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-indigo-500 ${
-              errors.apellido ? "border-red-500" : "border-gray-300"
-            }`}
-            autoComplete="family-name"
-          />
-          {errors.apellido && (
-            <p className="text-xs text-red-600 mt-1">{errors.apellido}</p>
-          )}
-        </div>
+        <input
+          name="nombre"
+          placeholder={t("ph.name")}
+          value={form.nombre}
+          onChange={onChange}
+          className={`control ${errors.nombre ? "border-red-500" : "border-gray-300"}`}
+        />
+        {errors.nombre && <p className="text-xs text-red-600 mt-1">{errors.nombre}</p>}
 
-        <div>
-          <input
-            id="correo"
-            name="correo"
-            type="email"
-            placeholder="Correo"
-            value={form.correo}
-            onChange={onChange}
-            required
-            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-            className={`w-full h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-indigo-500 ${
-              errors.correo ? "border-red-500" : "border-gray-300"
-            }`}
-            autoComplete="email"
-            inputMode="email"
-          />
-          {errors.correo && (
-            <p className="text-xs text-red-600 mt-1">{errors.correo}</p>
-          )}
-        </div>
+        <input
+          name="apellido"
+          placeholder={t("ph.surname")}
+          value={form.apellido}
+          onChange={onChange}
+          className={`control ${errors.apellido ? "border-red-500" : "border-gray-300"}`}
+        />
+        {errors.apellido && <p className="text-xs text-red-600 mt-1">{errors.apellido}</p>}
 
-        <div>
-          <input
-            id="telefono"
-            name="telefono"
-            placeholder="Teléfono"
-            value={form.telefono}
-            onChange={onChange}
-            required
-            className={`w-full h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-indigo-500 ${
-              errors.telefono ? "border-red-500" : "border-gray-300"
-            }`}
-            autoComplete="tel"
-            inputMode="tel"
-          />
-          {errors.telefono && (
-            <p className="text-xs text-red-600 mt-1">{errors.telefono}</p>
-          )}
-        </div>
+        <input
+          name="correo"
+          type="email"
+          placeholder={t("ph.email")}
+          value={form.correo}
+          onChange={onChange}
+          className={`control ${errors.correo ? "border-red-500" : "border-gray-300"}`}
+        />
+        {errors.correo && <p className="text-xs text-red-600 mt-1">{errors.correo}</p>}
 
-        <div>
-          <select
-            id="pais"
-            name="pais"
-            value={form.pais}
-            onChange={onChange}
-            required
-            className={`s-full h-11 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-indigo-500 ${
-              errors.pais ? "border-red-500" : "border-gray-300"
-            }`}
-          >
-            <option value=""> País </option>
-            <option value="AR">Argentina</option>
-          </select>
-          {errors.pais && (
-            <p className="text-xs text-red-600 mt-1">{errors.pais}</p>
-          )}
-        </div>
+        <input
+          name="telefono"
+          placeholder={t("ph.phone")}
+          value={form.telefono}
+          onChange={onChange}
+          className={`control ${errors.telefono ? "border-red-500" : "border-gray-300"}`}
+        />
+        {errors.telefono && <p className="text-xs text-red-600 mt-1">{errors.telefono}</p>}
 
-        <div>
-          <input
-            id="direccion"
-            name="direccion"
-            value={form.direccion}
-            placeholder="Dirección"
-            onChange={onChange}
-            required
-            className={`w-full h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-indigo-500 ${
-              errors.direccion ? "border-red-500" : "border-gray-300"
-            }`}
-            autoComplete="street-address"
-          />
-          {errors.direccion && (
-            <p className="text-xs text-red-600 mt-1">{errors.direccion}</p>
-          )}
-        </div>
+        <CountrySelect
+          value={form.pais}                    
+          initialId={user?.country_id || ""}      
+          onChange={(opt) => setForm((f) => ({ ...f, pais: opt?.value || "" }))}
+          error={errors.pais}
+          placeholder={t("ph.country")}          
+        />
+
+        <input
+          name="direccion"
+          placeholder={t("ph.address")}
+          value={form.direccion}
+          onChange={onChange}
+          className={`control ${errors.direccion ? "border-red-500" : "border-gray-300"}`}
+        />
+        {errors.direccion && <p className="text-xs text-red-600 mt-1">{errors.direccion}</p>}
 
         <div className="btn-row">
-          <button
-            type="button"
-            className="w-full h-11 rounded-xl border border-red-500 text-red-600"
-            onClick={() => history.back()}
-          >
-            Atrás
-          </button>
-
-          <button
-            type="submit"
-            className="w-full h-11 rounded-xl border border-blue-600 text-blue-600"
-          >
-            Actualizar
-          </button>
+          <button type="button" className="btn btn--red">{t("action.back")}</button>
+          <button type="submit" className="btn btn--blue">{t("action.update")}</button>
         </div>
       </form>
     </section>

@@ -7,6 +7,9 @@ export interface User {
   address: {
     address: string;
   };
+  phone: {
+    number: string;
+  };
 }
 
 export interface UserContextType {
