@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -10,26 +11,45 @@ import { fetchUser } from "../services/services";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+
+let cachedUser: User | null = null;
+
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(cachedUser);
+  const [loading, setLoading] = useState(!cachedUser);
+
+ 
+  const calledOnce = useRef(false);
 
   useEffect(() => {
+    if (calledOnce.current) return; 
+    calledOnce.current = true;
+
     async function loadUser() {
       try {
+        if (cachedUser) {
+          setUser(cachedUser);
+          setLoading(false);
+          return;
+        }
+
         const data = await fetchUser();
         if (!data) {
           setUser(null);
           return;
         }
-        setUser({
+
+        const filtered: User = {
           id: data.id,
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
           country_id: data.country_id,
           address: { address: data.address?.address ?? "" },
-        });
+        };
+
+        cachedUser = filtered;
+        setUser(filtered);
       } catch (e) {
         console.error(e);
         setUser(null);
@@ -37,6 +57,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setLoading(false);
       }
     }
+
     loadUser();
   }, []);
 
