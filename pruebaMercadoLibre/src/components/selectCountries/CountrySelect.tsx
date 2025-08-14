@@ -4,6 +4,7 @@ import Select from "react-select";
 import { getCountry } from "../../services/services";
 import type { Country } from "../../types/country.type";
 import "./CountrySelect.css";
+import { useT } from "../../i18n/useT";
 
 type Option = { value: string; label: string; _id: string };
 
@@ -21,8 +22,8 @@ export default function CountrySelect({
   placeholder?: string;
 }) {
   const [countries, setCountries] = useState<Country[]>([]);
-  const didPrefill = useRef(false); // evita prefijar dos veces
-
+  const didPrefill = useRef(false);
+  const { t } = useT();
   const didFetch = useRef(false);
 
   useEffect(() => {
@@ -72,14 +73,14 @@ export default function CountrySelect({
         options={options}
         value={selected}
         onChange={(opt) => onChange(opt ?? null)}
-        placeholder={placeholder} 
+        placeholder={placeholder}
         inputId="country-select"
         aria-invalid={showError}
         isClearable
       />
       {showError && (
         <p id="country-select-error" className="field-error">
-          Requerido
+          {t("error.required")}
         </p>
       )}
     </div>

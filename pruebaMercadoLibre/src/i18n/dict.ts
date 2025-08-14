@@ -14,12 +14,16 @@ export const MESSAGES: Record<Locale, Dict> = {
     "ph.phone": "Teléfono",
     "ph.country": "Seleccione un país...",
     "ph.address": "Dirección",
+    "ph.captcha": "No soy un robot",
 
     "error.required": "Requerido",
     "error.emailInvalid": "Email inválido",
 
     "action.back": "Atrás",
     "action.update": "Actualizar",
+    "action.captcha": "Token generado ✓",
+    "action.pending": "Pendiente",
+    "action.form": "Formulario válido ✔"
   },
 
   "pt-BR": {
@@ -32,11 +36,15 @@ export const MESSAGES: Record<Locale, Dict> = {
     "ph.phone": "Telefone",
     "ph.country": "Selecione um país...",
     "ph.address": "Endereço",
+    "ph.captcha": "Não sou um robô",
 
     "error.required": "Obrigatório",
     "error.emailInvalid": "E-mail inválido",
 
     "action.back": "Voltar",
     "action.update": "Atualizar",
+    "action.captcha": "Token gerado ✓",
+    "action.pending": "Pendente",
+    "action.form": "Formulário válido ✔"
   },
 };
