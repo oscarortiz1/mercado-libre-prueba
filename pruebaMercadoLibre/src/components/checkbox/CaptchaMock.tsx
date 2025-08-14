@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./CaptchaMock.css";
 import { useT } from "../../i18n/useT";
 function genToken(len = 32) {
-  // token base64url seguro (dummy)
   const bytes = new Uint8Array(len);
   crypto.getRandomValues(bytes);
   return btoa(String.fromCharCode(...bytes))
@@ -15,7 +14,7 @@ export default function CaptchaMock({
   value,
   onChange,
   name = "captcha_token",
-  error
+  error,
 }: {
   value: string | null | undefined;
   onChange: (token: string | null) => void;
@@ -25,8 +24,7 @@ export default function CaptchaMock({
   label?: string;
 }) {
   const [checked, setChecked] = useState(Boolean(value));
-   const { t } = useT();
-
+  const { t } = useT();
 
   useEffect(() => {
     setChecked(Boolean(value));

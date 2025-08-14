@@ -141,7 +141,6 @@ textarea {
 }
 
 .control {
-  /* del select: */
   min-height: 38px;
   background-color: hsl(0, 0%, 100%);
   border-color: hsl(0, 0%, 80%);
