@@ -62,13 +62,13 @@ Ejemplos:
 ## 📸 Pantallazos
 
 ### 📍 Página previa
-![Página previa](./screenshots/pagina-previa.png)
+![Página previa](./assets/pagina-previa.png)
 
 ### 📝 Página formulario
-![Página formulario](./screenshots/pagina-formulario.png)
+![Página formulario](./assets/formulario.png)
 
 ### ✅ Página confirmación
-![Página confirmación](./screenshots/pagina-confirmacion.png)
+![Página confirmación](./assets/pagina-confirmacion.png)
 
 ---
 
