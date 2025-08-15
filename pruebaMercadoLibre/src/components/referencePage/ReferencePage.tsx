@@ -4,7 +4,7 @@ import { useUser } from "../../contexts/userContext";
 import CountrySelect from "../selectCountries/CountrySelect";
 import { useT } from "../../i18n/useT";
 import CaptchaMock from "../checkbox/CaptchaMock";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function ReferencePage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -13,6 +13,8 @@ export default function ReferencePage() {
   const locale = searchParams.get("locale") || "es-AR";
   const token = searchParams.get("token");
   const { t } = useT();
+  const navigate = useNavigate();
+  const referrer = searchParams.get("referrer") || "/previous-step";
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
@@ -70,7 +72,6 @@ export default function ReferencePage() {
       console.log(form);
 
       const tokenCaptcha = form.captcha_token;
-      const referrer = searchParams.get("referrer") || "/previous-step";
 
       const url = `/step3?referrer=${encodeURIComponent(
         referrer
@@ -80,6 +81,10 @@ export default function ReferencePage() {
 
       window.open(url, "_self");
     }
+  }
+
+  function handleClick() {
+    navigate(referrer); // Va a la ruta indicada
   }
 
   return (
@@ -178,7 +183,7 @@ export default function ReferencePage() {
         )}
 
         <div className="btn-row">
-          <button type="button" className="btn btn--red">
+          <button type="button" onClick={handleClick} className="btn btn--red">
             {t("action.back")}
           </button>
           <button type="submit" className="btn btn--blue">
