@@ -7,6 +7,36 @@ import { useT } from "../../i18n/useT";
 
 type Option = { value: string; label: string; _id: string };
 
+const CACHE_KEY = "country_cache";
+const CACHE_TTL = 1000 * 60 * 60 * 24;
+
+function getCachedCountries(): Country[] | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+
+    const { data, exp } = JSON.parse(raw);
+    if (Date.now() > exp) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedCountries(data: Country[]) {
+  try {
+    const payload = {
+      data,
+      exp: Date.now() + CACHE_TTL,
+    };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+  } catch {
+  }
+}
+
 export default function CountrySelect({
   value,
   onChange,
@@ -25,23 +55,6 @@ export default function CountrySelect({
   const { t } = useT();
   const didFetch = useRef(false);
 
-  const CACHE_KEY = "country_cache";
-
-  function getCachedCountries(): Country[] | null {
-    try {
-      const raw = localStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      const { data, exp } = JSON.parse(raw);
-      if (Date.now() > exp) {
-        localStorage.removeItem(CACHE_KEY);
-        return null;
-      }
-      return data;
-    } catch {
-      return null;
-    }
-  }
-
   useEffect(() => {
     if (didFetch.current) return;
     didFetch.current = true;
@@ -53,8 +66,10 @@ export default function CountrySelect({
           setCountries(cached);
           return;
         }
+
         const data: Country[] = await getCountry();
         setCountries(data);
+        setCachedCountries(data); // Guardar en caché
       } catch (err) {
         console.error("Error al cargar países:", err);
       }

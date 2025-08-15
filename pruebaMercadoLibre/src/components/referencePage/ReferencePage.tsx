@@ -84,7 +84,7 @@ export default function ReferencePage() {
   }
 
   function handleClick() {
-    navigate(referrer); // Va a la ruta indicada
+    navigate(referrer);
   }
 
   return (
