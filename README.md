@@ -87,4 +87,4 @@ Ejemplos:
 ## 📌 Notas
 - Asegúrate de contar con un **token válido** antes de iniciar las pruebas.
 - Las llamadas a las APIs de Mercado Libre se realizan de forma autenticada (server-to-server).
-- Se implementa **cache** para optimizar las solicitudes de países.
+- Se implementa **cache** para optimizar las solicitudes de países y usuario.
