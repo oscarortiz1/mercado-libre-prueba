@@ -70,6 +70,18 @@ Ejemplos:
 ### ✅ Página confirmación
 ![Página confirmación](./assets/pagina-confirmacion.png)
 
+### LLamado api paises
+![paises](./assets/paises.png)
+
+### LLamado api user
+![user](./assets/informacion.png)
+
+### Cache primer llamado
+![user](./assets/cache1.png)
+
+### Cache segundo llamado
+![user](./assets/cache2.png)
+
 ---
 
 ## 📌 Notas
