@@ -1,0 +1,16 @@
+.captcha-container {
+  width: 300px;        /* Ancho fijo */
+  padding: 20px;       /* Espaciado interno */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+
+  /* Centrado en la pantalla */
+  margin: 50px auto;   /* Auto en horizontal + margen vertical */
+  text-align: center;  /* Centrar el contenido interno */
+}
+
+.btn--blue {
+  color: #2563eb;
+  border-color: #2563eb;
+}

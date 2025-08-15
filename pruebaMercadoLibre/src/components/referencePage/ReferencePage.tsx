@@ -4,8 +4,14 @@ import { useUser } from "../../contexts/userContext";
 import CountrySelect from "../selectCountries/CountrySelect";
 import { useT } from "../../i18n/useT";
 import CaptchaMock from "../checkbox/CaptchaMock";
+import { useSearchParams } from "react-router-dom";
 
 export default function ReferencePage() {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [searchParams] = useSearchParams();
+  const { user } = useUser();
+  const locale = searchParams.get("locale") || "es-AR";
+  const token = searchParams.get("token");
   const { t } = useT();
   const [form, setForm] = useState({
     nombre: "",
@@ -14,10 +20,8 @@ export default function ReferencePage() {
     telefono: "",
     pais: "",
     direccion: "",
-    captcha_token: "",
+    captcha_token: token || "",
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const { user } = useUser();
 
   useEffect(() => {
     if (!user) return;
@@ -56,22 +60,25 @@ export default function ReferencePage() {
     return e;
   }
 
-  function onSubmit(ev: { preventDefault: () => void }) {
+  function onSubmit(ev: React.FormEvent) {
     ev.preventDefault();
     const e = validate();
     setErrors(e);
+
     if (Object.keys(e).length === 0) {
       alert(t("action.form"));
       console.log(form);
+
       const tokenCaptcha = form.captcha_token;
+      const referrer = searchParams.get("referrer") || "/previous-step";
 
-      const referrer = "/previous-step";
-
-      const url = `/otra-pagina?referrer=${encodeURIComponent(
+      const url = `/step3?referrer=${encodeURIComponent(
         referrer
-      )}&token=${encodeURIComponent(tokenCaptcha)}`;
+      )}&token=${encodeURIComponent(tokenCaptcha)}&locale=${encodeURIComponent(
+        locale
+      )}`;
 
-      window.open(url, "_blank");
+      window.open(url, "_self");
     }
   }
 
@@ -160,13 +167,16 @@ export default function ReferencePage() {
         {errors.direccion && (
           <p className="text-xs text-red-600 mt-1">{errors.direccion}</p>
         )}
-        <CaptchaMock
-          value={form.captcha_token}
-          onChange={(token) =>
-            setForm((f) => ({ ...f, captcha_token: token || "" }))
-          }
-          error={errors.captcha_token}
-        />
+        {!token && (
+          <CaptchaMock
+            value={form.captcha_token}
+            onChange={(token) =>
+              setForm((f) => ({ ...f, captcha_token: token || "" }))
+            }
+            error={errors.captcha_token}
+          />
+        )}
+
         <div className="btn-row">
           <button type="button" className="btn btn--red">
             {t("action.back")}

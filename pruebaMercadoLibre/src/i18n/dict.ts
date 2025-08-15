@@ -7,6 +7,11 @@ export const MESSAGES: Record<Locale, Dict> = {
   "es-AR": {
     "title.almost": "Ya casi estamos listos",
     "title.update": "Actualiza tus datos",
+    "title.next": "Siguiente página",
+    "title.referrer": "Referrer:",
+    "title.token": "Token:",
+    "title.missingParams": "Faltan parámetros de búsqueda",
+    "title.home": "Página de inicio",
 
     "ph.name": "Nombre",
     "ph.surname": "Apellido",
@@ -23,12 +28,18 @@ export const MESSAGES: Record<Locale, Dict> = {
     "action.update": "Actualizar",
     "action.captcha": "Token generado ✓",
     "action.pending": "Pendiente",
-    "action.form": "Formulario válido ✔"
+    "action.form": "Formulario válido ✔",
+    "action.continue": "Continuar"
   },
 
   "pt-BR": {
     "title.almost": "Quase lá",
     "title.update": "Atualize seus dados",
+    "title.next": "Próxima página",
+    "title.referrer": "Referenciador:",
+    "title.token": "Token:",
+    "title.missingParams": "Faltam parâmetros de busca",
+    "title.home": "Página inicial",
 
     "ph.name": "Nome",
     "ph.surname": "Sobrenome",
@@ -45,6 +56,7 @@ export const MESSAGES: Record<Locale, Dict> = {
     "action.update": "Atualizar",
     "action.captcha": "Token gerado ✓",
     "action.pending": "Pendente",
-    "action.form": "Formulário válido ✔"
+    "action.form": "Formulário válido ✔",
+    "action.continue": "Continuar"
   },
 };

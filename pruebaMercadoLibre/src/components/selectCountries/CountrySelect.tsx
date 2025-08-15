@@ -1,4 +1,3 @@
-// CountrySelect.tsx
 import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import { getCountry } from "../../services/services";
@@ -26,12 +25,34 @@ export default function CountrySelect({
   const { t } = useT();
   const didFetch = useRef(false);
 
+  const CACHE_KEY = "country_cache";
+
+  function getCachedCountries(): Country[] | null {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const { data, exp } = JSON.parse(raw);
+      if (Date.now() > exp) {
+        localStorage.removeItem(CACHE_KEY);
+        return null;
+      }
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
   useEffect(() => {
     if (didFetch.current) return;
     didFetch.current = true;
 
     (async () => {
       try {
+        const cached = getCachedCountries();
+        if (cached) {
+          setCountries(cached);
+          return;
+        }
         const data: Country[] = await getCountry();
         setCountries(data);
       } catch (err) {

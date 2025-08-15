@@ -11,24 +11,46 @@ import { fetchUser } from "../services/services";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+const CACHE_KEY = "user_cache";
+const TTL_MS = 5 * 60 * 1000;
 
-let cachedUser: User | null = null;
+function getCachedUser(): User | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const { data, exp } = JSON.parse(raw);
+    if (Date.now() > exp) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function saveCachedUser(user: User) {
+  localStorage.setItem(
+    CACHE_KEY,
+    JSON.stringify({ data: user, exp: Date.now() + TTL_MS })
+  );
+}
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(cachedUser);
-  const [loading, setLoading] = useState(!cachedUser);
+  const [user, setUser] = useState<User | null>(getCachedUser());
+  const [loading, setLoading] = useState(!getCachedUser());
 
- 
   const calledOnce = useRef(false);
 
   useEffect(() => {
-    if (calledOnce.current) return; 
+    if (calledOnce.current) return;
     calledOnce.current = true;
 
     async function loadUser() {
       try {
-        if (cachedUser) {
-          setUser(cachedUser);
+        const cached = getCachedUser();
+        if (cached) {
+          setUser(cached);
           setLoading(false);
           return;
         }
@@ -49,7 +71,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
           phone: { number: data.phone?.number ?? "" },
         };
 
-        cachedUser = filtered;
+        saveCachedUser(filtered);
         setUser(filtered);
       } catch (e) {
         console.error(e);
